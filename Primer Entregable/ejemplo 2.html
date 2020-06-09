@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id='btnGiveCommand'>Dictar Comando</button>
+    <br><br>
+    <span id='message'></span>
+    <br><br>
+    
+    <input id='chkfiltrouno' type="button" onClick="onClick()"> Filtro Uno
+    <br>
+    <input id='chkfiltrodos' type="checkbox"> Filtro Dos
+    <br>
+    <input id='chkfiltrotres' type="checkbox"> Filtro Tres
+    <br>
+    <input id='chkfiltrocuatro' type="checkbox"> Filtro Cuatro
+    
+    <script>
+
+    function onClick() {
+    console.log('Prueba Click');
+    }
+    // document.getElementById('boton').addEventListener('click', onClick);
+
+        var message = document.querySelector('#message');
+
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+        var grammar = '#JSGF V1.0;'
+
+        var recognition = new SpeechRecognition();
+        var speechRecognitionList = new SpeechGrammarList();
+        speechRecognitionList.addFromString(grammar, 1);
+        recognition.grammars = speechRecognitionList;
+        recognition.lang = 'es-VE';
+        recognition.interimResults = false;
+
+        recognition.onresult = function(event) {
+            var last = event.results.length - 1;
+            var command = event.results[last][0].transcript;
+            message.textContent = 'Entrada de voz: ' + command + '.';
+
+            if(command.toLowerCase() === 'filtro 1'){
+                document.querySelector('#chkfiltrouno').onClick;
+            }
+            else if (command.toLowerCase() === 'filtro 2'){
+                document.querySelector('#chkfiltrodos').checked = true;
+            }
+            else if (command.toLowerCase() === 'filtro 3'){
+                document.querySelector('#chkfiltrotres').checked = true;
+            }
+            else if (command.toLowerCase() === 'filtro 4'){
+                document.querySelector('#chkfiltrocuatro').checked = true;
+            }  
+            if(command.toLowerCase() === 'apagar 1'){
+                document.querySelector('#chkfiltrouno').checked = false;
+            }
+            else if (command.toLowerCase() === 'apagar 2'){
+                document.querySelector('#chkfiltrodos').checked = false;
+            }
+            else if (command.toLowerCase() === 'apagar 3'){
+                document.querySelector('#chkfiltrotres').checked = false;
+            }
+            else if (command.toLowerCase() === 'apagar 4'){
+                document.querySelector('#chkfiltrocuatro').checked = false;
+            }   
+        };
+
+        recognition.onspeechend = function() {
+            recognition.stop();
+        };
+
+        recognition.onerror = function(event) {
+            message.textContent = 'Error occurred in recognition: ' + event.error;
+        }        
+
+        document.querySelector('#btnGiveCommand').addEventListener('click', function(){
+            recognition.start();
+
+        });
+
+    </script>
+</body>
+</html>
