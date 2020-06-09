@@ -1,3 +1,3 @@
 # Primer-entregable-IA
 
-#Utilizando la librera de SpeechRecognition
+Utilizando la librera de SpeechRecognition
